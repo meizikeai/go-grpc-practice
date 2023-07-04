@@ -1,0 +1,13 @@
+{
+  "name": "go-grpc-practice",
+  "script": "/home/dev/go-grpc-practice/go-grpc-practice",
+  "error_file": "/data/logs/pm2/go-grpc-practice/error.log",
+  "out_file": "/data/logs/pm2/go-grpc-practice/out.log",
+  "instances": 1,
+  "exec_interpreter": "none",
+  "exec_mode": "fork",
+  "merge_logs": true,
+  "env": {
+    "GGP_MODE": "test"
+  }
+}
