@@ -9,14 +9,14 @@ import (
 var Address = "127.0.0.1:9527"
 
 var mysqlConfig = map[string]types.ConfMySQL{
-	"ailab-test": {
+	"default-test": {
 		Master:   []string{"127.0.0.1:3306"},
 		Slave:    []string{"127.0.0.1:3306"},
 		Username: "blued",
 		Password: "g3bkshwqcj4wcSMr",
 		Database: "blued",
 	},
-	"ailab-release": {
+	"default-release": {
 		Master:   []string{"127.0.0.1:3306"},
 		Slave:    []string{"127.0.0.1:3306", "127.0.0.1:3306"},
 		Username: "test",
@@ -26,16 +26,26 @@ var mysqlConfig = map[string]types.ConfMySQL{
 }
 
 var redisConfig = map[string]types.ConfRedis{
-	"ailab-test": {
+	"default-test": {
 		Master:   []string{"127.0.0.1:6379"},
 		Password: "",
 		Db:       0,
 	},
-	"ailab-release": {
+	"default-release": {
 		Master:   []string{"127.0.0.1:6379"},
 		Password: "",
 		Db:       0,
 	},
+}
+
+func getMode() string {
+	mode := os.Getenv("GGP_MODE")
+
+	if mode == "" {
+		mode = "test"
+	}
+
+	return mode
 }
 
 func isProduction() bool {
@@ -51,32 +61,30 @@ func isProduction() bool {
 }
 
 func GetMySQLConfig() types.FullConfMySQL {
-	env := isProduction()
+	mode := getMode()
+	result := types.FullConfMySQL{}
 
-	confMySQL := mysqlConfig["ailab-release"]
-
-	if env == false {
-		confMySQL = mysqlConfig["ailab-test"]
+	data := []string{
+		"default",
 	}
 
-	result := types.FullConfMySQL{
-		"default": confMySQL,
+	for _, v := range data {
+		result[v] = mysqlConfig[v+"-"+mode]
 	}
 
 	return result
 }
 
 func GetRedisConfig() types.FullConfRedis {
-	env := isProduction()
+	mode := getMode()
+	result := types.FullConfRedis{}
 
-	confRedis := redisConfig["ailab-release"]
-
-	if env == false {
-		confRedis = redisConfig["ailab-test"]
+	data := []string{
+		"default",
 	}
 
-	result := types.FullConfRedis{
-		"default": confRedis,
+	for _, v := range data {
+		result[v] = redisConfig[v+"-"+mode]
 	}
 
 	return result
