@@ -41,4 +41,4 @@ https://gitlab-vywrajy.micoworld.net/ai-lab/blue-flame/go-grpc-practice.git
 
 #### 访问地址
 
-  + http://127.0.0.1:9527
+  + http://127.0.0.1:8888

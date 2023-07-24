@@ -32,7 +32,7 @@ func main() {
 		os.Exit(0)
 	})
 
-	client, err := net.Listen("tcp", config.Address)
+	client, err := net.Listen("tcp", config.Server)
 
 	if err != nil {
 		panic(fmt.Sprintf("Failed to listen: %v", err))
@@ -44,7 +44,7 @@ func main() {
 
 	reflection.Register(server)
 
-	fmt.Println("Listen and Server running on", config.Address)
+	fmt.Println("Listen and Server running on", config.Server)
 
 	if err := server.Serve(client); err != nil {
 		panic(fmt.Sprintf("Failed to serve: %v", err))
