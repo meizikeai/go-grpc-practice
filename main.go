@@ -5,11 +5,12 @@ import (
 	"net"
 	"os"
 
+	"go/protos"
+
 	"go-grpc-practice/config"
 	"go-grpc-practice/controllers"
 	"go-grpc-practice/libs/log"
 	"go-grpc-practice/libs/tool"
-	"go-grpc-practice/protos"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

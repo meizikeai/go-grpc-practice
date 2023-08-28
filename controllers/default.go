@@ -4,9 +4,10 @@ import (
 	"context"
 	"strings"
 
+	"go/protos"
+
 	"go-grpc-practice/libs/tool"
 	"go-grpc-practice/models"
-	"go-grpc-practice/protos"
 )
 
 type Server struct {

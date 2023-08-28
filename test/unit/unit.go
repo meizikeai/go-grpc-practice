@@ -5,7 +5,7 @@ import (
 	"errors"
 	"os"
 
-	"go-grpc-practice/protos"
+	"go/protos"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
