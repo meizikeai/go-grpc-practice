@@ -25,15 +25,16 @@ func init() {
 
 func main() {
 	tool.SignalHandler(func() {
-		tool.CloseMySQL()
-		tool.CloseRedis()
+		// tool.CloseMySQL()
+		// tool.CloseRedis()
 
 		tool.Stdout("Server Shutdown")
 
 		os.Exit(0)
 	})
 
-	client, err := net.Listen("tcp", config.Server)
+	port := config.GetPort()
+	client, err := net.Listen("tcp", ":"+port)
 
 	if err != nil {
 		panic(fmt.Sprintf("Failed to listen: %v", err))
@@ -45,7 +46,7 @@ func main() {
 
 	reflection.Register(server)
 
-	fmt.Println("Listen and Server running on", config.Server)
+	fmt.Println("The service is running on 127.0.0.1:" + port)
 
 	if err := server.Serve(client); err != nil {
 		panic(fmt.Sprintf("Failed to serve: %v", err))

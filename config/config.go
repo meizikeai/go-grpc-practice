@@ -5,12 +5,33 @@ import (
 	"os"
 )
 
-var Server = "127.0.0.1:8888"
+var env = []string{
+	"release",
+	"test",
+}
 
-func getMode() string {
+func GetPort() string {
+	res := os.Getenv("GGP_PORT")
+
+	if res == "" {
+		panic("The service port is not set")
+	}
+
+	return res
+}
+
+func GetMode() string {
+	pass := false
 	mode := os.Getenv("GGP_MODE")
 
-	if mode == "" {
+	for _, v := range env {
+		if v == mode {
+			pass = true
+			break
+		}
+	}
+
+	if pass == false {
 		mode = "test"
 	}
 
@@ -18,7 +39,7 @@ func getMode() string {
 }
 
 func isProduction() bool {
-	mode := getMode()
+	mode := GetMode()
 	result := false
 
 	if mode == "release" {
@@ -29,7 +50,7 @@ func isProduction() bool {
 }
 
 func getKey(k string) string {
-	mode := getMode()
+	mode := GetMode()
 	result := fmt.Sprintf("%s-%s", k, mode)
 
 	return result
